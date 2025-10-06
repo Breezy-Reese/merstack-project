@@ -23,8 +23,32 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // No session management implemented yet
-    setLoading(false);
+    const token = localStorage.getItem('token');
+    if (token) {
+      // Verify token and get user
+      fetch('http://localhost:5000/api/auth/me', {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        },
+        credentials: 'include',
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.user) {
+          setUser(data.user);
+        } else {
+          localStorage.removeItem('token');
+        }
+      })
+      .catch(() => {
+        localStorage.removeItem('token');
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+    } else {
+      setLoading(false);
+    }
   }, []);
 
   const signUp = async (email: string, password: string, username: string, name: string) => {

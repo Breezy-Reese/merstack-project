@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Users, FolderKanban, MessageSquare, Globe, TrendingUp, Code } from 'lucide-react';
+import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
 interface Stats {
   totalDevelopers: number;
@@ -100,28 +101,17 @@ export default function Dashboard() {
             <h3 className="text-xl font-bold text-slate-900">Top Countries</h3>
           </div>
 
-          {stats.topCountries.length > 0 ? (
-            <div className="space-y-4">
-              {stats.topCountries.map((item, index) => (
-                <div key={item.country}>
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-slate-700 font-medium">{item.country}</span>
-                    <span className="text-slate-600">{item.count} developers</span>
-                  </div>
-                  <div className="w-full bg-slate-100 rounded-full h-2">
-                    <div
-                      className="bg-blue-600 h-2 rounded-full transition-all"
-                      style={{
-                        width: `${(item.count / stats.totalDevelopers) * 100}%`,
-                      }}
-                    />
-                  </div>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <p className="text-slate-500 text-center py-8">No data available</p>
-          )}
+          <div className="h-80">
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={stats.topCountries.length > 0 ? stats.topCountries : [{ country: 'No Data', count: 0 }]}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="country" />
+                <YAxis />
+                <Tooltip formatter={(value) => [`${value} developers`, 'Count']} />
+                <Bar dataKey="count" fill="#3b82f6" />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
         </div>
 
         <div className="bg-white rounded-2xl shadow-lg p-6">
@@ -130,21 +120,17 @@ export default function Dashboard() {
             <h3 className="text-xl font-bold text-slate-900">Popular Languages</h3>
           </div>
 
-          {stats.topLanguages.length > 0 ? (
-            <div className="grid grid-cols-2 gap-4">
-              {stats.topLanguages.map((item) => (
-                <div
-                  key={item.language}
-                  className="bg-slate-50 rounded-lg p-4 hover:bg-slate-100 transition"
-                >
-                  <p className="text-slate-900 font-medium mb-1">{item.language}</p>
-                  <p className="text-slate-600 text-sm">{item.count} developers</p>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <p className="text-slate-500 text-center py-8">No data available</p>
-          )}
+          <div className="h-80">
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={stats.topLanguages.length > 0 ? stats.topLanguages : [{ language: 'No Data', count: 0 }]} layout="horizontal">
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis type="number" />
+                <YAxis dataKey="language" type="category" width={80} />
+                <Tooltip formatter={(value) => [`${value} developers`, 'Count']} />
+                <Bar dataKey="count" fill="#10b981" />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
         </div>
       </div>
 
@@ -155,47 +141,29 @@ export default function Dashboard() {
         </div>
 
         {stats.experienceLevels.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {stats.experienceLevels.map((item) => (
-              <div key={item.level} className="text-center">
-                <div className="relative inline-block mb-4">
-                  <svg className="w-32 h-32 transform -rotate-90">
-                    <circle
-                      cx="64"
-                      cy="64"
-                      r="56"
-                      stroke="currentColor"
-                      strokeWidth="12"
-                      fill="transparent"
-                      className="text-slate-100"
-                    />
-                    <circle
-                      cx="64"
-                      cy="64"
-                      r="56"
-                      stroke="currentColor"
-                      strokeWidth="12"
-                      fill="transparent"
-                      strokeDasharray={`${2 * Math.PI * 56}`}
-                      strokeDashoffset={`${2 * Math.PI * 56 * (1 - item.count / stats.totalDevelopers)}`}
-                      className={`${
-                        item.level === 'Beginner' ? 'text-slate-400' :
-                        item.level === 'Intermediate' ? 'text-blue-500' :
-                        'text-green-500'
-                      }`}
-                      strokeLinecap="round"
-                    />
-                  </svg>
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <span className="text-2xl font-bold text-slate-900">{item.count}</span>
-                  </div>
-                </div>
-                <p className="text-lg font-semibold text-slate-900">{item.level}</p>
-                <p className="text-slate-600 text-sm">
-                  {((item.count / stats.totalDevelopers) * 100).toFixed(1)}%
-                </p>
-              </div>
-            ))}
+          <div className="h-80">
+            <ResponsiveContainer width="100%" height="100%">
+              <PieChart>
+                <Pie
+                  data={stats.experienceLevels}
+                  cx="50%"
+                  cy="50%"
+                  outerRadius={80}
+                  fill="#8884d8"
+                  dataKey="count"
+                >
+                  {stats.experienceLevels.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={
+                      entry.level === 'Beginner' ? '#94a3b8' :
+                      entry.level === 'Intermediate' ? '#3b82f6' :
+                      '#10b981'
+                    } />
+                  ))}
+                </Pie>
+                <Tooltip formatter={(value, name) => [`${value} developers`, name]} />
+                <Legend />
+              </PieChart>
+            </ResponsiveContainer>
           </div>
         ) : (
           <p className="text-slate-500 text-center py-8">No data available</p>

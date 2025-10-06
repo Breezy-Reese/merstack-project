@@ -69,12 +69,21 @@ export default function Projects() {
   };
 
   const createProject = async () => {
-    if (!user || !newProject.title) return;
+    if (!newProject.title) return;
+
+    const token = localStorage.getItem('token');
+    if (!token) {
+      console.error('No token found');
+      return;
+    }
 
     try {
       const res = await fetch(`${API_BASE}/api/projects`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
         credentials: 'include',
         body: JSON.stringify(newProject),
       });

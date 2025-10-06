@@ -1,4 +1,5 @@
 const express = require('express');
+const mongoose = require('mongoose');
 const { authenticateToken } = require('./auth');
 const User = require('../models/User');
 const Project = require('../models/Project');
@@ -20,6 +21,9 @@ router.get('/', async (req, res) => {
 // Get profile by ID
 router.get('/:id', async (req, res) => {
   try {
+    if (!req.params.id || req.params.id === 'undefined' || !mongoose.Types.ObjectId.isValid(req.params.id)) {
+      return res.status(400).json({ error: 'Invalid profile ID' });
+    }
     const profile = await User.findById(req.params.id).select('-password');
     if (!profile) {
       return res.status(404).json({ error: 'Profile not found' });
