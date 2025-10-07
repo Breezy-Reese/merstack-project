@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { Search, MapPin, Code, Briefcase, Github, Link as LinkIcon, Mail } from 'lucide-react';
 
+const API_BASE = import.meta.env.VITE_API_BASE || 'http://localhost:5000';
+
 interface Profile {
   _id: string;
   name: string;
@@ -37,7 +39,7 @@ export default function DeveloperSearch() {
   const loadDevelopers = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch('http://localhost:5000/api/profiles', {
+      const response = await fetch(`${API_BASE}/api/profiles`, {
         headers: {
           'Authorization': `Bearer ${token}`,
         },

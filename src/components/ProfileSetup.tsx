@@ -6,6 +6,8 @@ const COUNTRIES = ['United States', 'Canada', 'United Kingdom', 'Germany', 'Fran
 const LANGUAGES = ['JavaScript', 'TypeScript', 'Python', 'Java', 'C++', 'C#', 'Go', 'Rust', 'PHP', 'Ruby', 'Swift', 'Kotlin', 'Dart'];
 const SKILLS = ['Frontend', 'Backend', 'Full Stack', 'Mobile', 'DevOps', 'UI/UX Design', 'Data Science', 'Machine Learning', 'Blockchain', 'Game Development', 'Cloud Architecture'];
 
+const API_BASE = import.meta.env.VITE_API_BASE || 'http://localhost:5000';
+
 export default function ProfileSetup() {
   const { user } = useAuth();
   const [loading, setLoading] = useState(false);
@@ -34,7 +36,7 @@ export default function ProfileSetup() {
 
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch(`http://localhost:5000/api/profiles/${user.id}`, {
+      const response = await fetch(`${API_BASE}/api/profiles/${user.id}`, {
         headers: {
           'Authorization': `Bearer ${token}`,
         },
@@ -72,7 +74,7 @@ export default function ProfileSetup() {
 
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch(`http://localhost:5000/api/profiles/${user.id}`, {
+      const response = await fetch(`${API_BASE}/api/profiles/${user.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
