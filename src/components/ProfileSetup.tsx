@@ -6,7 +6,7 @@ const COUNTRIES = ['United States', 'Canada', 'United Kingdom', 'Germany', 'Fran
 const LANGUAGES = ['JavaScript', 'TypeScript', 'Python', 'Java', 'C++', 'C#', 'Go', 'Rust', 'PHP', 'Ruby', 'Swift', 'Kotlin', 'Dart'];
 const SKILLS = ['Frontend', 'Backend', 'Full Stack', 'Mobile', 'DevOps', 'UI/UX Design', 'Data Science', 'Machine Learning', 'Blockchain', 'Game Development', 'Cloud Architecture'];
 
-const API_BASE = import.meta.env.VITE_API_BASE || 'http://localhost:5000';
+const API_BASE = import.meta.env.VITE_API_BASE || 'https://merstack-project.onrender.com';
 
 export default function ProfileSetup() {
   const { user } = useAuth();

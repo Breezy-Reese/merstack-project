@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Search, MapPin, Code, Briefcase, Github, Link as LinkIcon, Mail } from 'lucide-react';
 
-const API_BASE = import.meta.env.VITE_API_BASE || 'http://localhost:5000';
+const API_BASE = import.meta.env.VITE_API_BASE || 'https://merstack-project.onrender.com';
 
 interface Profile {
   _id: string;

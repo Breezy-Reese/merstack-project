@@ -48,7 +48,7 @@ export default function Projects() {
   });
   const [techInput, setTechInput] = useState('');
 
-  const API_BASE = import.meta.env.VITE_API_BASE || 'http://localhost:5000';
+  const API_BASE = import.meta.env.VITE_API_BASE || 'https://merstack-project.onrender.com';
 
   useEffect(() => {
     loadProjects();

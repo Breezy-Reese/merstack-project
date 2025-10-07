@@ -53,7 +53,7 @@ export default function Chat() {
   const [viewMode, setViewMode] = useState<'direct' | 'project' | 'general'>('direct');
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  const API_BASE = import.meta.env.VITE_API_BASE || 'http://localhost:5000';
+  const API_BASE = import.meta.env.VITE_API_BASE || 'https://merstack-project.onrender.com';
 
   const getAuthHeaders = () => {
     const token = localStorage.getItem('token');
