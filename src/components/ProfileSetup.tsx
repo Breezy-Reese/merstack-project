@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { Globe, MapPin, Code, Briefcase, Github, Link as LinkIcon, Save } from 'lucide-react';
 
-const COUNTRIES = ['United States', 'Canada', 'United Kingdom', 'Germany', 'France', 'India', 'Australia', 'Japan', 'Brazil', 'Mexico', 'Nigeria', 'South Africa', 'Other'];
+const COUNTRIES = ['United States', 'Canada', 'United Kingdom', 'Germany', 'France', 'India', 'Australia', 'Japan', 'Brazil', 'Mexico', 'Nigeria','Kenya', 'South Africa', 'Other'];
 const LANGUAGES = ['JavaScript', 'TypeScript', 'Python', 'Java', 'C++', 'C#', 'Go', 'Rust', 'PHP', 'Ruby', 'Swift', 'Kotlin', 'Dart'];
 const SKILLS = ['Frontend', 'Backend', 'Full Stack', 'Mobile', 'DevOps', 'UI/UX Design', 'Data Science', 'Machine Learning', 'Blockchain', 'Game Development', 'Cloud Architecture'];
 
